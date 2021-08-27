@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { InputNumber, Button } from "antd";
 
 const BASEURL = "http://api.pi.delivery/v1/pi";
 
@@ -8,6 +9,7 @@ const Pi = (props) => {
         numbers: new Array(10).fill(0),
         count: 0,
     });
+    const [range, setRange] = useState({ start: 0, end: 100 });
 
     function getNumbers(startNumber, Digits) {
         var config = {
@@ -17,8 +19,6 @@ const Pi = (props) => {
         };
         axios(config)
             .then((response) => {
-                console.log(response.data.content);
-                console.log(pi);
                 findNumbers(response.data.content);
             })
             .catch((error) => {
@@ -37,10 +37,21 @@ const Pi = (props) => {
             count: pi.count + numbers.length,
         });
     }
+
+    function startOnChange(value) {
+        setRange({ ...range, start: value });
+    }
+    function endOnChange(value) {
+        setRange({ ...range, end: value });
+    }
     return (
         <div>
             <div>Pi</div>
-            <button onClick={() => getNumbers(0, 100)}>a</button>
+            <InputNumber min={0} defaultValue={0} onChange={startOnChange} />
+            <InputNumber min={1} defaultValue={100} onChange={endOnChange} />
+            <Button onClick={() => getNumbers(range.start, range.end)}>
+                Visulize
+            </Button>
         </div>
     );
 };
