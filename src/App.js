@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Layout } from "antd";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Header from "./components/Header";
+import About from "./components/About";
+import Pi from "./components/Pi";
+import Draw from "./components/Draw";
+import Stream from "./components/Stream";
+
+const { Content } = Layout;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Layout>
+            <Router>
+                <Header />
+                <Content className="content">
+                    <Route exact path="/">
+                        <About />
+                    </Route>
+                    <Route exact path="/pi">
+                        <Pi />
+                    </Route>
+                    <Route exact path="/draw">
+                        <Draw />
+                    </Route>
+                    <Route exact path="/stream">
+                        <Stream />
+                    </Route>
+                </Content>
+            </Router>
+        </Layout>
+    );
 }
 
 export default App;
